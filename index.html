@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Windows, macOS ও Linux শর্টকাট গাইড</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#18181b;
+    --bg-elev:#202023;
+    --bg-card:#26262a;
+    --bg-card-hover:#2f2f34;
+    --border:#37373c;
+    --text:#e2e2e5;
+    --text-dim:#95959c;
+    --text-bright:#ffffff;
+    --accent:#3b82f6;
+    --accent-bright:#7dd3fc;
+    --accent-grad-2:#a78bfa;
+    --keycap-bg:#323236;
+    --keycap-bg-hover:#3b3b40;
+    --keycap-border:#59595f;
+    --badge-variant:#a78bfa;
+    --success:#6ccb5f;
+    --danger:#f87171;
+    --star:#f5a623;
+    --radius:8px;
+    --sidebar-w:256px;
+    --titlebar-h:48px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{ -webkit-text-size-adjust:100%; }
+  html,body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Noto Sans Bengali','Segoe UI',system-ui,sans-serif;
+    overflow-x:hidden;
+    width:100%;
+  }
+  img,svg{ max-width:100%; display:block; }
+  button{ font-family:inherit; }
+  ::selection{ background:rgba(59,130,246,.35); }
+
+  /* ---------- Title bar ---------- */
+  .titlebar{
+    height:var(--titlebar-h);
+    background:#212124;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    padding:0 8px 0 6px;
+    gap:8px;
+    position:sticky;
+    top:0;
+    z-index:100;
+  }
+  .menu-btn{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    width:40px; height:40px;
+    background:transparent;
+    border:none;
+    border-radius:6px;
+    color:var(--text);
+    cursor:pointer;
+    flex:none;
+  }
+  .menu-btn:hover, .menu-btn:focus-visible{ background:#3a3a3a; }
+  .titlebar-label{
+    flex:1;
+    text-align:center;
+    font-size:12.5px;
+    color:var(--text-dim);
+    font-family:'JetBrains Mono',Consolas,monospace;
+    letter-spacing:.2px;
+    padding:0 6px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .lang-switch{
+    display:flex;
+    align-items:center;
+    background:#2c2c30;
+    border:1px solid #4a4a50;
+    border-radius:999px;
+    padding:2px;
+    flex:none;
+    gap:2px;
+  }
+  .lang-btn{
+    border:none;
+    background:transparent;
+    color:var(--text-dim);
+    font-family:'JetBrains Mono',Consolas,monospace;
+    font-size:11.5px;
+    font-weight:600;
+    padding:6px 10px;
+    border-radius:999px;
+    cursor:pointer;
+    min-height:28px;
+    transition:background .15s, color .15s;
+    white-space:nowrap;
+  }
+  .lang-btn.active{
+    background:linear-gradient(135deg,var(--accent-bright),var(--accent-grad-2));
+    color:#0d1117;
+  }
+  .lang-btn:not(.active):hover{ color:var(--text); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:clamp(26px,6vw,46px) 16px clamp(20px,5vw,26px);
+    text-align:center;
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+    background:var(--bg-elev);
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:-40% -10% auto -10%;
+    height:340px;
+    background:
+      radial-gradient(420px 220px at 25% 0%, rgba(59,130,246,.25), transparent 65%),
+      radial-gradient(420px 220px at 80% 10%, rgba(167,139,250,.2), transparent 65%);
+    filter:blur(10px);
+    pointer-events:none;
+  }
+  .hero-inner{ position:relative; }
+  .hero-eyebrow{
+    font-family:'JetBrains Mono',Consolas,monospace;
+    font-size:clamp(11px,2vw,12.5px);
+    color:var(--accent-bright);
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  .hero h1{
+    font-weight:700;
+    font-size:clamp(22px,5.6vw,38px);
+    color:var(--text-bright);
+    letter-spacing:-.3px;
+    line-height:1.25;
+  }
+  .hero h1 span{
+    background:linear-gradient(90deg,var(--accent-bright),var(--accent-grad-2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p{
+    margin-top:8px;
+    font-size:clamp(13px,2.6vw,15.5px);
+    color:var(--text-dim);
+    padding:0 8px;
+  }
+
+  /* ---------- OS tabs ---------- */
+  .os-tabs{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:22px auto 0;
+    max-width:640px;
+    padding:0 12px;
+    flex-wrap:wrap;
+  }
+  .os-tab{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 16px;
+    border-radius:999px;
+    background:#2a2a2e;
+    border:1px solid #444;
+    color:var(--text-dim);
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background .15s, color .15s, border-color .15s;
+    min-height:40px;
+  }
+  .os-tab svg{ width:16px; height:16px; flex:none; }
+  .os-tab:hover{ background:#333338; color:var(--text); }
+  .os-tab.active{
+    background:linear-gradient(135deg, rgba(59,130,246,.24), rgba(167,139,250,.24));
+    border-color:var(--accent-bright);
+    color:var(--text-bright);
+  }
+
+  /* ---------- Sub switcher (win version / linux distro) ---------- */
+  .sub-tabs{
+    display:none;
+    justify-content:center;
+    gap:7px;
+    margin:12px auto 0;
+    max-width:680px;
+    padding:0 12px;
+    flex-wrap:wrap;
+  }
+  .sub-tabs.show{ display:flex; }
+  .sub-tab{
+    padding:7px 13px;
+    border-radius:999px;
+    background:transparent;
+    border:1px solid #444;
+    color:var(--text-dim);
+    font-size:12.5px;
+    cursor:pointer;
+    transition:background .15s, color .15s, border-color .15s;
+    min-height:34px;
+    font-family:'JetBrains Mono',Consolas,monospace;
+  }
+  .sub-tab:hover{ background:#2f2f34; color:var(--text); }
+  .sub-tab.active{
+    background:var(--accent-bright);
+    border-color:var(--accent-bright);
+    color:#0d1117;
+  }
+
+  /* ---------- Search pill ---------- */
+  .palette-wrap{
+    max-width:600px;
+    margin:20px auto 0;
+    padding:0 12px;
+  }
+  .palette{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:rgba(50,50,54,.65);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border:1px solid #4a4a50;
+    border-radius:999px;
+    padding:12px 18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+    transition:border-color .15s, box-shadow .15s;
+  }
+  .palette:focus-within{
+    border-color:var(--accent-bright);
+    box-shadow:0 0 0 3px rgba(125,211,252,.18), 0 10px 30px rgba(0,0,0,.4);
+  }
+  .palette svg{ flex:none; opacity:.75; width:17px; height:17px; }
+  .palette input{
+    flex:1;
+    min-width:0;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--text-bright);
+    font-size:15px;
+    font-family:'Noto Sans Bengali','Segoe UI',sans-serif;
+  }
+  .palette input::placeholder{ color:var(--text-dim); }
+  .palette-kbd{
+    font-family:'JetBrains Mono',Consolas,monospace;
+    font-size:11px;
+    color:var(--text-dim);
+    border:1px solid #5a5a5a;
+    border-radius:6px;
+    padding:2px 6px;
+    flex:none;
+    display:none;
+  }
+  @media (min-width:480px){ .palette-kbd{ display:inline-block; } }
+
+  .kbd-caption{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--text-dim);
+    margin-top:9px;
+    padding:0 12px;
+    line-height:1.5;
+  }
+
+  .legend{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-top:10px;
+    font-size:11.5px;
+    color:var(--text-dim);
+    padding:0 12px;
+  }
+  .legend span{ display:inline-flex; align-items:center; gap:5px; }
+
+  .detected-pill{
+    position:fixed;
+    left:50%;
+    bottom:44px;
+    transform:translate(-50%,12px);
+    background:#26262a;
+    border:1px solid var(--keycap-border);
+    color:var(--text-bright);
+    font-family:'JetBrains Mono',Consolas,monospace;
+    font-size:13px;
+    padding:9px 16px;
+    border-radius:999px;
+    box-shadow:0 10px 26px rgba(0,0,0,.5);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .18s, transform .18s;
+    z-index:200;
+    white-space:nowrap;
+    max-width:90vw;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .detected-pill.show{ opacity:1; transform:translate(-50%,0); }
+  .detected-pill.ok{ border-color:var(--success); color:var(--success); }
+  .detected-pill.no{ border-color:var(--danger); color:var(--danger); }
+
+  /* ---------- Layout ---------- */
+  .layout{
+    display:flex;
+    max-width:1180px;
+    margin:0 auto;
+    align-items:flex-start;
+    position:relative;
+  }
+
+  .backdrop{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    z-index:90;
+  }
+  .backdrop.show{ display:block; }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:var(--sidebar-w);
+    flex:none;
+    position:sticky;
+    top:var(--titlebar-h);
+    align-self:flex-start;
+    max-height:calc(100vh - var(--titlebar-h));
+    overflow-y:auto;
+    padding:20px 10px 40px 16px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .sidebar-title{
+    font-family:'JetBrains Mono',Consolas,monospace;
+    font-size:11px;
+    letter-spacing:1.5px;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    margin-bottom:10px;
+    padding-left:8px;
+  }
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:10px 10px;
+    border-radius:6px;
+    color:var(--text);
+    font-size:14px;
+    cursor:pointer;
+    border-left:2px solid transparent;
+    transition:background .12s;
+    min-height:40px;
+  }
+  .nav-item:hover{ background:var(--bg-card-hover); }
+  .nav-item.active{
+    background:rgba(59,130,246,.16);
+    border-left-color:var(--accent-bright);
+    color:var(--text-bright);
+  }
+  .nav-item .count{
+    margin-left:auto;
+    font-family:'JetBrains Mono',Consolas,monospace;
+    font-size:11.5px;
+    color:var(--text-dim);
+    background:#3a3a3f;
+    padding:1px 7px;
+    border-radius:10px;
+  }
+  .nav-icon{ flex:none; opacity:.85; width:16px; height:16px; }
+
+  /* ---------- Main content ---------- */
+  main{
+    flex:1;
+    min-width:0;
+    padding:24px 20px 96px;
+  }
+
+  .no-results{
+    display:none;
+    text-align:center;
+    padding:60px 16px;
+    color:var(--text-dim);
+  }
+  .no-results.show{ display:block; }
+  .no-results .big{ font-size:34px; margin-bottom:10px; }
+
+  section.category{
+    margin-bottom:36px;
+    scroll-margin-top:60px;
+  }
+  section.category.hidden{ display:none; }
+
+  .cat-header{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:4px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--border);
+    flex-wrap:wrap;
+  }
+  .cat-num{
+    font-family:'JetBrains Mono',Consolas,monospace;
+    color:var(--accent-bright);
+    font-size:14px;
+    font-weight:700;
+  }
+  .cat-title{
+    font-size:clamp(16.5px,3.2vw,19px);
+    font-weight:600;
+    color:var(--text-bright);
+  }
+  .cat-sub{
+    font-size:13px;
+    color:var(--text-dim);
+    margin:8px 0 16px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(min(100%,300px),1fr));
+    gap:10px;
+  }
+
+  .card{
+    --mx:50%; --my:50%;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:13px 14px;
+    transition:background .12s, border-color .12s, box-shadow .25s;
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+    min-height:44px;
+  }
+  .card::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(160px circle at var(--mx) var(--my), rgba(125,211,252,.12), transparent 60%);
+    opacity:0;
+    transition:opacity .2s;
+    pointer-events:none;
+  }
+  .card:hover::after, .card:focus-visible::after{ opacity:1; }
+  .card:hover, .card:focus-visible{
+    background:var(--bg-card-hover);
+    border-color:#5a5a5a;
+    outline:none;
+  }
+  .card:focus-visible{ box-shadow:0 0 0 2px var(--accent-bright); }
+  .card.hidden{ display:none; }
+  .badge-star{
+    position:absolute; top:6px; right:8px;
+    font-size:10px; color:var(--star); opacity:.9;
+  }
+  .badge-variant{
+    position:absolute; top:6px; right:8px;
+    font-size:9px;
+    font-family:'JetBrains Mono',Consolas,monospace;
+    font-weight:700;
+    padding:1px 6px;
+    border-radius:8px;
+    color:#fff;
+    background:var(--badge-variant);
+    white-space:nowrap;
+    max-width:110px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .keys{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    flex-wrap:wrap;
+    flex:none;
+    min-width:120px;
+    max-width:44%;
+  }
+  .chord{ display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+  .chord + .chord::before{
+    content:'';
+    display:inline-block;
+    width:10px;
+  }
+  kbd{
+    font-family:'JetBrains Mono',Consolas,monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--text-bright);
+    background:var(--keycap-bg);
+    border:1px solid var(--keycap-border);
+    border-bottom-width:2px;
+    border-radius:5px;
+    padding:4px 7px;
+    white-space:nowrap;
+  }
+  .card:hover kbd{ background:var(--keycap-bg-hover); }
+  .plus{ color:var(--text-dim); font-size:11px; }
+
+  .desc{
+    font-size:13.5px;
+    color:var(--text);
+    line-height:1.5;
+    flex:1;
+    min-width:0;
+  }
+  mark{
+    background:rgba(125,211,252,.28);
+    color:var(--text-bright);
+    border-radius:2px;
+    padding:0 1px;
+  }
+
+  .copy-hint{
+    margin-left:auto;
+    font-size:10.5px;
+    color:var(--text-dim);
+    opacity:0;
+    transition:opacity .12s;
+    flex:none;
+    font-family:'JetBrains Mono',Consolas,monospace;
+    display:none;
+  }
+  @media (hover:hover){
+    .copy-hint{ display:block; }
+    .card:hover .copy-hint{ opacity:.7; }
+  }
+  .card.copied .copy-hint{ opacity:1 !important; color:var(--success); display:block; }
+
+  .os-lock{
+    flex:none;
+    font-size:12px;
+    opacity:.55;
+    cursor:help;
+    line-height:1;
+  }
+  .card.copied .os-lock{ opacity:.3; }
+
+  /* ---------- Keyboard-match highlight ---------- */
+  @keyframes kbdPulse{
+    0%   { box-shadow:0 0 0 0 rgba(125,211,252,.65), 0 0 0 0 rgba(125,211,252,.35); border-color:var(--accent-bright); background:rgba(125,211,252,.14); }
+    60%  { box-shadow:0 0 0 10px rgba(125,211,252,0), 0 0 0 18px rgba(125,211,252,0); border-color:var(--accent-bright); }
+    100% { box-shadow:0 0 0 0 rgba(125,211,252,0); border-color:var(--border); background:var(--bg-card); }
+  }
+  .card.kbd-match{
+    animation:kbdPulse 1.5s ease-out;
+  }
+  .card.kbd-match kbd{
+    background:var(--accent-bright);
+    color:#0d1117;
+    border-color:var(--accent-bright);
+  }
+
+  /* ---------- Status bar ---------- */
+  .statusbar{
+    position:fixed;
+    bottom:0; left:0; right:0;
+    min-height:30px;
+    background:linear-gradient(90deg,#3b82f6,#7c3aed);
+    display:flex;
+    align-items:center;
+    padding:5px 12px;
+    padding-bottom:calc(5px + env(safe-area-inset-bottom));
+    font-size:11.5px;
+    color:#eef4ff;
+    font-family:'JetBrains Mono',Consolas,monospace;
+    gap:14px;
+    z-index:80;
+    box-shadow:0 -2px 10px rgba(0,0,0,.3);
+    flex-wrap:wrap;
+  }
+  .statusbar .item{ display:flex; align-items:center; gap:6px; white-space:nowrap; }
+  .statusbar .sep{ opacity:.4; }
+  .statusbar .spacer{ flex:1; }
+  .hide-sm{ display:inline-flex; }
+
+  footer.tip{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 20px 60px 20px;
+  }
+  .tip-box{
+    border:1px dashed var(--border);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    font-size:13px;
+    color:var(--text-dim);
+    line-height:1.6;
+  }
+  .tip-box b{ color:var(--accent-bright); }
+
+  /* ---------- Responsive breakpoints ---------- */
+  @media (max-width: 860px){
+    .menu-btn{ display:flex; }
+    .sidebar{
+      position:fixed;
+      top:var(--titlebar-h);
+      left:0;
+      height:calc(100vh - var(--titlebar-h));
+      max-height:none;
+      width:min(78vw,300px);
+      background:var(--bg-elev);
+      border-right:1px solid var(--border);
+      transform:translateX(-100%);
+      transition:transform .22s ease;
+      z-index:95;
+      padding:16px 12px 24px 16px;
+    }
+    .sidebar.open{ transform:translateX(0); }
+    main{ padding:18px 14px 100px; }
+  }
+
+  @media (max-width: 600px){
+    .card{ flex-wrap:wrap; }
+    .keys{ max-width:100%; min-width:0; }
+    .desc{ flex-basis:100%; }
+    .hide-sm{ display:none; }
+    .statusbar{ font-size:11px; gap:10px; }
+    .os-tab span.full{ display:none; }
+    .detected-pill{ bottom:40px; font-size:12px; padding:7px 12px; }
+    .titlebar-label{ display:none; }
+    .lang-btn{ padding:6px 8px; font-size:11px; }
+  }
+
+  @media (max-width: 400px){
+    .grid{ grid-template-columns:1fr; }
+    .hero{ padding-left:12px; padding-right:12px; }
+  }
+
+  @media (min-width:1400px){
+    .layout{ max-width:1320px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; animation:none !important; }
+  }
+
+  @media (prefers-contrast: more){
+    :root{ --border:#666; --text-dim:#c8c8c8; }
+  }
+</style>
+</head>
+<body>
+
+<div class="titlebar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="titlebar-label">all-os-shortcuts-reference — Windows · macOS · Linux</div>
+  <div class="lang-switch" id="langSwitch">
+    <button class="lang-btn" data-lang="bn">বাংলা</button>
+    <button class="lang-btn" data-lang="en">English</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow" id="txtEyebrow"></div>
+    <h1 id="txtHeroTitle"></h1>
+    <p id="txtHeroSub"></p>
+
+    <div class="os-tabs" id="osTabs"></div>
+    <div class="sub-tabs" id="subTabs"></div>
+
+    <div class="palette-wrap">
+      <div class="palette">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9a9a9a" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="search" type="text" placeholder="" autocomplete="off">
+        <span class="palette-kbd">Esc</span>
+      </div>
+    </div>
+    <div class="kbd-caption" id="txtKbdCaption"></div>
+    <div class="legend">
+      <span id="txtLegendLive"></span>
+      <span id="txtLegendLock"></span>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="backdrop" id="backdrop"></div>
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-title" id="txtSidebarTitle"></div>
+    <div id="navItems"></div>
+  </nav>
+
+  <main>
+    <div class="no-results" id="noResults">
+      <div class="big">¯\_(ツ)_/¯</div>
+      <div id="txtNoResults"></div>
+    </div>
+    <div id="categories"></div>
+  </main>
+</div>
+
+<footer class="tip">
+  <div class="tip-box" id="tipBox"></div>
+</footer>
+
+<div class="statusbar">
+  <div class="item">⌨️ <span id="statCount">0 / 0</span> <span id="txtStatShortcuts"></span></div>
+  <div class="sep hide-sm">|</div>
+  <div class="item hide-sm" id="statOS">Windows · Windows 10</div>
+  <div class="spacer"></div>
+  <div class="item hide-sm" id="txtStatHint"></div>
+</div>
+
+<div class="detected-pill" id="detectedPill"></div>
+
+<script>
+/* ============================= UI STRINGS ============================= */
+const UI = {
+  bn: {
+    eyebrow: "ক্রস-প্ল্যাটফর্ম কীবোর্ড রেফারেন্স",
+    heroTitleHTML: 'Windows, <span>macOS</span> ও <span>Linux</span> শর্টকাট গাইড',
+    heroSub: "একই জায়গায় তিনটি অপারেটিং সিস্টেমের সব শর্টকাট — উপরে ট্যাব বদলে দেখুন",
+    searchPlaceholder: "শর্টকাট বা কাজ খুঁজুন...",
+    kbdCaption: "সরাসরি কীবোর্ডে শর্টকাট চাপুন — মিলে গেলে নিচে সেটি হাইলাইট হবে।",
+    legendLive: "⌨️ লাইভ টেস্ট করা যায়",
+    legendLock: "🔒 শুধু OS নিয়ন্ত্রণ করে — ব্রাউজারে ধরা পড়বে না",
+    sidebarTitle: "ক্যাটাগরি",
+    noResultsText: "কোনো শর্টকাট পাওয়া যায়নি। অন্য কিছু দিয়ে খুঁজে দেখুন।",
+    copyTitle: "ক্লিক করে কপি করুন",
+    copiedText: "কপি হয়েছে ✓",
+    tipLabel: "টিপ",
+    statShortcuts: "শর্টকাট",
+    statSearchHint: "Ctrl/Cmd+K দিয়ে সার্চ করুন",
+    matchedPrefix: "মিলেছে: ",
+    noMatchPrefix: "কোনো মিল নেই: ",
+    osLockTitle: "এই শর্টকাট সরাসরি অপারেটিং সিস্টেম নিয়ন্ত্রণ করে — ব্রাউজার এটি কখনো দেখতে পায় না, তাই সাথে সাথেই কাজ হয়ে যায় এবং এই সাইট এটি লাইভ ধরতে পারবে না",
+  },
+  en: {
+    eyebrow: "Cross-Platform Keyboard Reference",
+    heroTitleHTML: 'Windows, <span>macOS</span>, and <span>Linux</span> Shortcuts Guide',
+    heroSub: "All shortcuts for three operating systems in one place — switch tabs above",
+    searchPlaceholder: "Search a shortcut or task...",
+    kbdCaption: "Press a shortcut directly on your keyboard — a match will highlight below.",
+    legendLive: "⌨️ Live-testable",
+    legendLock: "🔒 OS-controlled only — the browser never catches it",
+    sidebarTitle: "Categories",
+    noResultsText: "No shortcuts found. Try searching for something else.",
+    copyTitle: "Click to copy",
+    copiedText: "Copied ✓",
+    tipLabel: "Tip",
+    statShortcuts: "shortcuts",
+    statSearchHint: "Press Ctrl/Cmd+K to search",
+    matchedPrefix: "Matched: ",
+    noMatchPrefix: "No match: ",
+    osLockTitle: "This shortcut is handled directly by the operating system — the browser never sees it, so it fires instantly and can't be live-detected on this site",
+  },
+};
+
+let LANG = 'bn';
+
+const ICONS = {
+  star:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9"/></svg>',
+  layout:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="18" rx="1.5"/><rect x="14" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  desktop:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="1.5"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/></svg>',
+  folder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>',
+  grid:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',
+  text:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="18" y2="18"/></svg>',
+  gear:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.14.36.36.68.64.94"/></svg>',
+  camera:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
+  windows:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3.5L10.5 2.4V11H3V3.5M11.4 2.3L21 1V11H11.4V2.3M3 12H10.5V20.6L3 19.5V12M11.4 12H21V22L11.4 20.7V12"/></svg>',
+  apple:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="13" rx="1.5"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>',
+  tux:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>',
+};
+
+/* ---------- Windows dataset ---------- */
+const WIN_CATEGORIES = [
+  { icon:"star", title:{bn:"সবচেয়ে বেশি ব্যবহৃত", en:"Most Used"}, sub:{bn:"প্রতিদিন বারবার ব্যবহৃত হয় — সবার আগে মুখস্থ করুন", en:"Used constantly, every day — learn these first"} },
+  { icon:"layout", title:{bn:"উইন্ডো স্ন্যাপিং ও ম্যানেজমেন্ট", en:"Window Snapping & Management"}, sub:{bn:"একাধিক উইন্ডো সাজানো ও নিয়ন্ত্রণের শর্টকাট", en:"Shortcuts for arranging and controlling multiple windows"} },
+  { icon:"desktop", title:{bn:"ভার্চুয়াল ডেস্কটপ ও Task View", en:"Virtual Desktops & Task View"}, sub:{bn:"একাধিক ডেস্কটপে কাজ ভাগ করার শর্টকাট", en:"Shortcuts for splitting work across multiple desktops"} },
+  { icon:"folder", title:{bn:"ফাইল এক্সপ্লোরার", en:"File Explorer"}, sub:{bn:"ফাইল ও ফোল্ডার নিয়ন্ত্রণের শর্টকাট", en:"Shortcuts for controlling files and folders"} },
+  { icon:"grid", title:{bn:"টাস্কবার, উইজেট ও সার্চ", en:"Taskbar, Widgets & Search"}, sub:{bn:"টাস্কবার ও প্যানেলভিত্তিক শর্টকাট (সংস্করণভেদে ভিন্ন)", en:"Taskbar and panel-based shortcuts (differ by version)"} },
+  { icon:"text", title:{bn:"টেক্সট এডিটিং", en:"Text Editing"}, sub:{bn:"লেখালেখি ও সিলেকশনের সাধারণ শর্টকাট", en:"Common shortcuts for writing and selection"} },
+  { icon:"gear", title:{bn:"সিস্টেম ও এক্সেসিবিলিটি", en:"System & Accessibility"}, sub:{bn:"সিস্টেম কন্ট্রোল ও এক্সেসিবিলিটি সংক্রান্ত শর্টকাট", en:"Shortcuts for system control and accessibility"} },
+];
+const WIN_ITEMS = [
+  { cat:0, essential:true, chords:[["Win"]], desc:{bn:"স্টার্ট মেনু খুলুন/বন্ধ করুন", en:"Open/close the Start menu"} },
+  { cat:0, essential:true, chords:[["Win","D"]], desc:{bn:"সব উইন্ডো মিনিমাইজ করে ডেস্কটপ দেখান", en:"Minimize all windows to show the desktop"} },
+  { cat:0, essential:true, chords:[["Win","E"]], desc:{bn:"ফাইল এক্সপ্লোরার খুলুন", en:"Open File Explorer"} },
+  { cat:0, essential:true, chords:[["Win","I"]], desc:{bn:"সেটিংস খুলুন", en:"Open Settings"} },
+  { cat:0, essential:true, chords:[["Win","L"]], desc:{bn:"কম্পিউটার লক করুন", en:"Lock the computer"} },
+  { cat:0, essential:true, chords:[["Win","R"]], desc:{bn:"Run ডায়ালগ খুলুন", en:"Open the Run dialog"} },
+  { cat:0, essential:true, chords:[["Win","S"]], desc:{bn:"সার্চ খুলুন", en:"Open Search"}, variantDesc:{"10":{bn:"সার্চ খুলুন (Cortana-ভিত্তিক সার্চ বক্স)", en:"Open Search (Cortana-based search box)"}} },
+  { cat:0, essential:true, chords:[["Alt","Tab"]], desc:{bn:"খোলা অ্যাপগুলোর মধ্যে সুইচ করুন", en:"Switch between open apps"} },
+  { cat:0, essential:true, chords:[["Alt","F4"]], desc:{bn:"বর্তমান উইন্ডো বা অ্যাপ বন্ধ করুন", en:"Close the current window or app"} },
+  { cat:0, essential:true, chords:[["Ctrl","Shift","Esc"]], desc:{bn:"টাস্ক ম্যানেজার সরাসরি খুলুন", en:"Open Task Manager directly"} },
+  { cat:0, essential:true, chords:[["Ctrl","C"]], desc:{bn:"কপি করুন", en:"Copy"} },
+  { cat:0, essential:true, chords:[["Ctrl","X"]], desc:{bn:"কাট করুন", en:"Cut"} },
+  { cat:0, essential:true, chords:[["Ctrl","V"]], desc:{bn:"পেস্ট করুন", en:"Paste"} },
+  { cat:0, essential:true, chords:[["Ctrl","Z"]], desc:{bn:"Undo — শেষ পরিবর্তন বাতিল করুন", en:"Undo — revert the last change"} },
+  { cat:0, essential:true, chords:[["Ctrl","A"]], desc:{bn:"সব সিলেক্ট করুন", en:"Select all"} },
+  { cat:0, essential:true, chords:[["Win","V"]], desc:{bn:"ক্লিপবোর্ড হিস্টোরি খুলুন", en:"Open clipboard history"} },
+  { cat:0, essential:true, chords:[["Win","Shift","S"]], desc:{bn:"স্ক্রিনের নির্দিষ্ট অংশের স্ক্রিনশট নিন", en:"Take a screenshot of a specific area of the screen"} },
+  { cat:0, essential:true, chords:[["PrtScn"]], desc:{bn:"পুরো স্ক্রিনের স্ক্রিনশট ক্লিপবোর্ডে কপি করুন", en:"Copy a screenshot of the whole screen to the clipboard"} },
+  { cat:1, chords:[["Win","Left"]], desc:{bn:"উইন্ডো স্ক্রিনের বাম পাশে স্ন্যাপ করুন", en:"Snap the window to the left side of the screen"} },
+  { cat:1, chords:[["Win","Right"]], desc:{bn:"উইন্ডো স্ক্রিনের ডান পাশে স্ন্যাপ করুন", en:"Snap the window to the right side of the screen"} },
+  { cat:1, chords:[["Win","Up"]], desc:{bn:"উইন্ডো ম্যাক্সিমাইজ করুন", en:"Maximize the window"} },
+  { cat:1, chords:[["Win","Down"]], desc:{bn:"উইন্ডো মিনিমাইজ/রিস্টোর করুন", en:"Minimize/restore the window"} },
+  { cat:1, chords:[["Win","Home"]], desc:{bn:"বর্তমান উইন্ডো ছাড়া বাকি সব মিনিমাইজ করুন", en:"Minimize every window except the current one"} },
+  { cat:1, chords:[["Win","Z"]], desc:{bn:"Snap Layouts দেখান — একাধিক লেআউট থেকে বেছে নিন", en:"Show Snap Layouts — pick from multiple layouts"}, onlyVariant:"11" },
+  { cat:1, chords:[["Alt","Space"]], desc:{bn:"উইন্ডোর সিস্টেম মেনু খুলুন (Move/Resize/Close)", en:"Open the window's system menu (Move/Resize/Close)"} },
+  { cat:2, chords:[["Win","Tab"]], desc:{bn:"Task View খুলুন — সব উইন্ডো ও ভার্চুয়াল ডেস্কটপ দেখুন", en:"Open Task View — see all windows and virtual desktops"} },
+  { cat:2, chords:[["Win","Ctrl","D"]], desc:{bn:"নতুন ভার্চুয়াল ডেস্কটপ তৈরি করুন", en:"Create a new virtual desktop"} },
+  { cat:2, chords:[["Win","Ctrl","Right"]], desc:{bn:"পরবর্তী ভার্চুয়াল ডেস্কটপে যান", en:"Go to the next virtual desktop"} },
+  { cat:2, chords:[["Win","Ctrl","F4"]], desc:{bn:"বর্তমান ভার্চুয়াল ডেস্কটপ বন্ধ করুন", en:"Close the current virtual desktop"} },
+  { cat:3, chords:[["Ctrl","N"]], desc:{bn:"নতুন এক্সপ্লোরার উইন্ডো খুলুন", en:"Open a new Explorer window"} },
+  { cat:3, chords:[["Ctrl","Shift","N"]], desc:{bn:"নতুন ফোল্ডার তৈরি করুন", en:"Create a new folder"} },
+  { cat:3, chords:[["Alt","Up"]], desc:{bn:"এক লেভেল উপরের ফোল্ডারে যান", en:"Go up one folder level"} },
+  { cat:3, chords:[["F2"]], desc:{bn:"সিলেক্ট করা ফাইল/ফোল্ডার রিনেম করুন", en:"Rename the selected file/folder"} },
+  { cat:3, chords:[["Delete"]], desc:{bn:"রিসাইকেল বিনে সরান", en:"Move to Recycle Bin"} },
+  { cat:3, chords:[["Shift","Delete"]], desc:{bn:"স্থায়ীভাবে ডিলিট করুন", en:"Delete permanently"} },
+  { cat:3, chords:[["Alt","Enter"]], desc:{bn:"সিলেক্ট করা ফাইলের প্রোপার্টিজ দেখুন", en:"View properties of the selected file"} },
+  { cat:4, chords:[["Win","A"]], desc:{bn:"Quick Settings খুলুন (Wi-Fi, ভলিউম, ব্রাইটনেস)", en:"Open Quick Settings (Wi-Fi, volume, brightness)"}, variantDesc:{"10":{bn:"Action Center খুলুন (নোটিফিকেশন ও কুইক অ্যাকশন একসাথে)", en:"Open Action Center (notifications and quick actions together)"}} },
+  { cat:4, chords:[["Win","N"]], desc:{bn:"Notification Center ও ক্যালেন্ডার খুলুন", en:"Open Notification Center and calendar"}, onlyVariant:"11" },
+  { cat:4, chords:[["Win","W"]], desc:{bn:"Widgets প্যানেল খুলুন", en:"Open the Widgets panel"}, onlyVariant:"11" },
+  { cat:4, chords:[["Win","1"]], desc:{bn:"টাস্কবারে প্রথম পিন করা অ্যাপ চালু/সুইচ করুন", en:"Launch/switch to the first pinned taskbar app"} },
+  { cat:4, chords:[["Win","X"]], desc:{bn:"Quick Link (Power User) মেনু খুলুন", en:"Open the Quick Link (Power User) menu"} },
+  { cat:5, chords:[["Ctrl","Left"]], desc:{bn:"কার্সর এক শব্দ বামে সরান", en:"Move cursor one word to the left"} },
+  { cat:5, chords:[["Ctrl","Right"]], desc:{bn:"কার্সর এক শব্দ ডানে সরান", en:"Move cursor one word to the right"} },
+  { cat:5, chords:[["Ctrl","Backspace"]], desc:{bn:"আগের পুরো শব্দটি ডিলিট করুন", en:"Delete the whole previous word"} },
+  { cat:5, chords:[["Ctrl","B"]], desc:{bn:"টেক্সট বোল্ড করুন", en:"Bold the text"} },
+  { cat:6, chords:[["Win","U"]], desc:{bn:"Accessibility সেটিংস খুলুন", en:"Open Accessibility settings"}, variantDesc:{"10":{bn:"Ease of Access সেটিংস খুলুন", en:"Open Ease of Access settings"}} },
+  { cat:6, chords:[["Win","Plus"]], desc:{bn:"Magnifier দিয়ে জুম ইন করুন", en:"Zoom in with Magnifier"} },
+  { cat:6, chords:[["Win","Ctrl","Enter"]], desc:{bn:"Narrator চালু/বন্ধ করুন", en:"Turn Narrator on/off"} },
+  { cat:6, chords:[["Ctrl","Alt","Delete"]], desc:{bn:"সিকিউরিটি অপশন মেনু (লক/সাইন আউট/টাস্ক ম্যানেজার)", en:"Security options menu (lock/sign out/Task Manager)"} },
+  { cat:6, chords:[["Win","."]], desc:{bn:"ইমোজি, GIF ও ইমোটিকন প্যানেল খুলুন", en:"Open the emoji, GIF, and emoticon panel"} },
+];
+
+/* ---------- macOS dataset ---------- */
+const MAC_CATEGORIES = [
+  { icon:"star", title:{bn:"সবচেয়ে বেশি ব্যবহৃত", en:"Most Used"}, sub:{bn:"প্রতিদিন বারবার ব্যবহৃত হয় — সবার আগে মুখস্থ করুন", en:"Used constantly, every day — learn these first"} },
+  { icon:"layout", title:{bn:"উইন্ডো ও Mission Control", en:"Windows & Mission Control"}, sub:{bn:"উইন্ডো, Spaces ও Mission Control নিয়ন্ত্রণ", en:"Controlling windows, Spaces, and Mission Control"} },
+  { icon:"folder", title:{bn:"ফাইন্ডার (Finder)", en:"Finder"}, sub:{bn:"ফাইল ও ফোল্ডার ব্রাউজ করার শর্টকাট", en:"Shortcuts for browsing files and folders"} },
+  { icon:"camera", title:{bn:"স্ক্রিনশট ও মিডিয়া", en:"Screenshots & Media"}, sub:{bn:"স্ক্রিনশট ও স্ক্রিন রেকর্ডিং সংক্রান্ত শর্টকাট", en:"Shortcuts for screenshots and screen recording"} },
+  { icon:"text", title:{bn:"টেক্সট এডিটিং", en:"Text Editing"}, sub:{bn:"লেখালেখি ও সিলেকশনের সাধারণ শর্টকাট", en:"Common shortcuts for writing and selection"} },
+  { icon:"gear", title:{bn:"সিস্টেম ও এক্সেসিবিলিটি", en:"System & Accessibility"}, sub:{bn:"সিস্টেম কন্ট্রোল ও এক্সেসিবিলিটি সংক্রান্ত শর্টকাট", en:"Shortcuts for system control and accessibility"} },
+];
+const MAC_ITEMS = [
+  { cat:0, essential:true, chords:[["Cmd","Space"]], desc:{bn:"Spotlight সার্চ খুলুন", en:"Open Spotlight search"} },
+  { cat:0, essential:true, chords:[["Cmd","Tab"]], desc:{bn:"খোলা অ্যাপগুলোর মধ্যে সুইচ করুন", en:"Switch between open apps"} },
+  { cat:0, essential:true, chords:[["Cmd","`"]], desc:{bn:"একই অ্যাপের উইন্ডোগুলোর মধ্যে সুইচ করুন", en:"Switch between windows of the same app"} },
+  { cat:0, essential:true, chords:[["Cmd","Q"]], desc:{bn:"অ্যাপ সম্পূর্ণ বন্ধ করুন", en:"Quit the app completely"} },
+  { cat:0, essential:true, chords:[["Cmd","W"]], desc:{bn:"বর্তমান উইন্ডো/ট্যাব বন্ধ করুন", en:"Close the current window/tab"} },
+  { cat:0, essential:true, chords:[["Cmd","C"]], desc:{bn:"কপি করুন", en:"Copy"} },
+  { cat:0, essential:true, chords:[["Cmd","X"]], desc:{bn:"কাট করুন", en:"Cut"} },
+  { cat:0, essential:true, chords:[["Cmd","V"]], desc:{bn:"পেস্ট করুন", en:"Paste"} },
+  { cat:0, essential:true, chords:[["Cmd","Z"]], desc:{bn:"Undo", en:"Undo"} },
+  { cat:0, essential:true, chords:[["Cmd","Shift","Z"]], desc:{bn:"Redo", en:"Redo"} },
+  { cat:0, essential:true, chords:[["Cmd","A"]], desc:{bn:"সব সিলেক্ট করুন", en:"Select all"} },
+  { cat:0, essential:true, chords:[["Cmd","S"]], desc:{bn:"সেভ করুন", en:"Save"} },
+  { cat:0, essential:true, chords:[["Cmd",","]], desc:{bn:"অ্যাপের Preferences/Settings খুলুন", en:"Open the app's Preferences/Settings"} },
+  { cat:0, essential:true, chords:[["Cmd","H"]], desc:{bn:"বর্তমান অ্যাপ হাইড করুন", en:"Hide the current app"} },
+  { cat:0, essential:true, chords:[["Cmd","Option","Esc"]], desc:{bn:"Force Quit ডায়ালগ খুলুন", en:"Open the Force Quit dialog"} },
+  { cat:1, chords:[["Cmd","M"]], desc:{bn:"উইন্ডো মিনিমাইজ করুন", en:"Minimize the window"} },
+  { cat:1, chords:[["Cmd","Ctrl","F"]], desc:{bn:"ফুলস্ক্রিন মোড টগল করুন", en:"Toggle full-screen mode"} },
+  { cat:1, chords:[["Ctrl","Up"]], desc:{bn:"Mission Control খুলুন (সব উইন্ডো ও Spaces দেখুন)", en:"Open Mission Control (see all windows and Spaces)"} },
+  { cat:1, chords:[["Ctrl","Down"]], desc:{bn:"বর্তমান অ্যাপের সব উইন্ডো দেখুন (App Exposé)", en:"View all windows of the current app (App Exposé)"} },
+  { cat:1, chords:[["Ctrl","Left"]], desc:{bn:"আগের Space-এ যান", en:"Go to the previous Space"} },
+  { cat:1, chords:[["Ctrl","Right"]], desc:{bn:"পরের Space-এ যান", en:"Go to the next Space"} },
+  { cat:1, chords:[["Ctrl","Cmd","Q"]], desc:{bn:"স্ক্রিন লক করুন", en:"Lock the screen"} },
+  { cat:1, chords:[["Cmd","Option","D"]], desc:{bn:"Dock দেখান/লুকান", en:"Show/hide the Dock"} },
+  { cat:2, chords:[["Cmd","N"]], desc:{bn:"নতুন Finder উইন্ডো খুলুন", en:"Open a new Finder window"} },
+  { cat:2, chords:[["Cmd","Shift","N"]], desc:{bn:"নতুন ফোল্ডার তৈরি করুন", en:"Create a new folder"} },
+  { cat:2, chords:[["Cmd","Delete"]], desc:{bn:"Trash-এ সরান", en:"Move to Trash"} },
+  { cat:2, chords:[["Cmd","Shift","Delete"]], desc:{bn:"Trash খালি করুন", en:"Empty the Trash"} },
+  { cat:2, chords:[["Cmd","Up"]], desc:{bn:"প্যারেন্ট ফোল্ডারে যান", en:"Go to the enclosing folder"} },
+  { cat:2, chords:[["Cmd","Down"]], desc:{bn:"সিলেক্ট করা ফোল্ডার/ফাইল খুলুন", en:"Open the selected folder/file"} },
+  { cat:2, chords:[["Cmd","I"]], desc:{bn:"Get Info (প্রোপার্টিজ) দেখুন", en:"View Get Info (properties)"} },
+  { cat:2, chords:[["Space"]], desc:{bn:"Quick Look দিয়ে প্রিভিউ দেখুন", en:"Preview with Quick Look"} },
+  { cat:2, chords:[["Cmd","Shift","."]], desc:{bn:"লুকানো ফাইল দেখান/লুকান", en:"Show/hide hidden files"} },
+  { cat:3, essential:true, chords:[["Cmd","Shift","3"]], desc:{bn:"পুরো স্ক্রিনের স্ক্রিনশট নিন", en:"Take a screenshot of the whole screen"} },
+  { cat:3, essential:true, chords:[["Cmd","Shift","4"]], desc:{bn:"নির্দিষ্ট অংশের স্ক্রিনশট নিন", en:"Take a screenshot of a specific area"} },
+  { cat:3, chords:[["Cmd","Shift","5"]], desc:{bn:"স্ক্রিনশট/স্ক্রিন রেকর্ডিং টুলবার খুলুন", en:"Open the screenshot/screen recording toolbar"} },
+  { cat:4, chords:[["Option","Left"]], desc:{bn:"কার্সর এক শব্দ বামে সরান", en:"Move cursor one word to the left"} },
+  { cat:4, chords:[["Option","Right"]], desc:{bn:"কার্সর এক শব্দ ডানে সরান", en:"Move cursor one word to the right"} },
+  { cat:4, chords:[["Cmd","Left"]], desc:{bn:"লাইনের শুরুতে যান", en:"Go to the start of the line"} },
+  { cat:4, chords:[["Cmd","Backspace"]], desc:{bn:"পুরো লাইন ডিলিট করুন", en:"Delete the whole line"} },
+  { cat:4, chords:[["Option","Backspace"]], desc:{bn:"আগের শব্দ ডিলিট করুন", en:"Delete the previous word"} },
+  { cat:4, chords:[["Cmd","B"]], desc:{bn:"টেক্সট বোল্ড করুন", en:"Bold the text"} },
+  { cat:5, chords:[["Cmd","Shift","Q"]], desc:{bn:"লগ আউট করুন", en:"Log out"} },
+  { cat:5, chords:[["Cmd","F5"]], desc:{bn:"VoiceOver চালু/বন্ধ করুন", en:"Turn VoiceOver on/off"} },
+  { cat:5, chords:[["Cmd","Option","8"]], desc:{bn:"Zoom (স্ক্রিন ম্যাগনিফিকেশন) টগল করুন", en:"Toggle Zoom (screen magnification)"} },
+  { cat:5, chords:[["Cmd","Option","="]], desc:{bn:"Zoom ইন করুন", en:"Zoom in"} },
+];
+
+/* ---------- Linux dataset (distro-wise) ---------- */
+const LINUX_CATEGORIES = [
+  { icon:"star", title:{bn:"সবচেয়ে বেশি ব্যবহৃত", en:"Most Used"}, sub:{bn:"প্রতিদিন বারবার ব্যবহৃত হয় — সবার আগে মুখস্থ করুন", en:"Used constantly, every day — learn these first"} },
+  { icon:"layout", title:{bn:"উইন্ডো ম্যানেজমেন্ট", en:"Window Management"}, sub:{bn:"উইন্ডো সাজানো, টাইল ও সুইচ করার শর্টকাট", en:"Shortcuts for arranging, tiling, and switching windows"} },
+  { icon:"desktop", title:{bn:"ওয়ার্কস্পেস", en:"Workspaces"}, sub:{bn:"একাধিক ভার্চুয়াল ডেস্কটপে কাজ ভাগ করার শর্টকাট", en:"Shortcuts for splitting work across virtual desktops"} },
+  { icon:"folder", title:{bn:"ফাইল ম্যানেজার", en:"File Manager"}, sub:{bn:"ফাইল ব্রাউজারের শর্টকাট (ডিস্ট্রো অনুযায়ী ভিন্ন)", en:"File browser shortcuts (differ by distro)"} },
+  { icon:"gear", title:{bn:"সিস্টেম ও অন্যান্য", en:"System & Other"}, sub:{bn:"TTY, স্ক্রিনশট ও সিস্টেম কন্ট্রোল", en:"TTY, screenshots, and system control"} },
+];
+const LINUX_ITEMS = [
+  { cat:0, essential:true, chords:[["Ctrl","C"]], desc:{bn:"কপি করুন", en:"Copy"} },
+  { cat:0, essential:true, chords:[["Ctrl","X"]], desc:{bn:"কাট করুন", en:"Cut"} },
+  { cat:0, essential:true, chords:[["Ctrl","V"]], desc:{bn:"পেস্ট করুন", en:"Paste"} },
+  { cat:0, essential:true, chords:[["Ctrl","Z"]], desc:{bn:"Undo", en:"Undo"} },
+  { cat:0, essential:true, chords:[["Ctrl","A"]], desc:{bn:"সব সিলেক্ট করুন", en:"Select all"} },
+  { cat:0, essential:true, chords:[["Ctrl","S"]], desc:{bn:"সেভ করুন", en:"Save"} },
+
+  { cat:0, essential:true, onlyVariant:"gnome", chords:[["Super"]], desc:{bn:"Activities Overview খুলুন", en:"Open Activities Overview"} },
+  { cat:0, essential:true, onlyVariant:"gnome", chords:[["Super","A"]], desc:{bn:"অ্যাপ গ্রিড দেখান", en:"Show the app grid"} },
+  { cat:0, essential:true, onlyVariant:"gnome", chords:[["Alt","Tab"]], desc:{bn:"অ্যাপ সুইচ করুন", en:"Switch between apps"} },
+  { cat:0, essential:true, onlyVariant:"gnome", chords:[["Ctrl","Alt","T"]], desc:{bn:"টার্মিনাল খুলুন", en:"Open a terminal"} },
+  { cat:0, essential:true, onlyVariant:"gnome", chords:[["Super","L"]], desc:{bn:"স্ক্রিন লক করুন", en:"Lock the screen"} },
+  { cat:0, onlyVariant:"gnome", chords:[["PrtScn"]], desc:{bn:"পুরো স্ক্রিনশট নিন (ফাইলে সেভ হয়)", en:"Take a full screenshot (saved to a file)"} },
+  { cat:0, onlyVariant:"gnome", chords:[["Shift","PrtScn"]], desc:{bn:"নির্বাচিত অংশের স্ক্রিনশট নিন", en:"Take a screenshot of a selected area"} },
+  { cat:0, onlyVariant:"gnome", chords:[["Alt","PrtScn"]], desc:{bn:"বর্তমান উইন্ডোর স্ক্রিনশট নিন", en:"Take a screenshot of the current window"} },
+  { cat:1, onlyVariant:"gnome", chords:[["Super","Up"]], desc:{bn:"উইন্ডো ম্যাক্সিমাইজ করুন", en:"Maximize the window"} },
+  { cat:1, onlyVariant:"gnome", chords:[["Super","Down"]], desc:{bn:"উইন্ডো রিস্টোর/মিনিমাইজ করুন", en:"Restore/minimize the window"} },
+  { cat:1, onlyVariant:"gnome", chords:[["Super","Left"]], desc:{bn:"উইন্ডো বামে টাইল করুন", en:"Tile the window to the left"} },
+  { cat:1, onlyVariant:"gnome", chords:[["Super","Right"]], desc:{bn:"উইন্ডো ডানে টাইল করুন", en:"Tile the window to the right"} },
+  { cat:1, onlyVariant:"gnome", chords:[["Alt","F4"]], desc:{bn:"উইন্ডো বন্ধ করুন", en:"Close the window"} },
+  { cat:1, onlyVariant:"gnome", chords:[["Alt","F7"]], desc:{bn:"উইন্ডো মুভ মোড চালু করুন", en:"Start window move mode"} },
+  { cat:2, onlyVariant:"gnome", chords:[["Super","Page Up"]], desc:{bn:"আগের ওয়ার্কস্পেসে যান", en:"Go to the previous workspace"} },
+  { cat:2, onlyVariant:"gnome", chords:[["Super","Page Down"]], desc:{bn:"পরের ওয়ার্কস্পেসে যান", en:"Go to the next workspace"} },
+  { cat:2, onlyVariant:"gnome", chords:[["Ctrl","Alt","Shift","Up"]], desc:{bn:"বর্তমান উইন্ডো অন্য ওয়ার্কস্পেসে সরান", en:"Move the current window to another workspace"} },
+  { cat:2, onlyVariant:"gnome", chords:[["Super","Tab"]], desc:{bn:"Overview-তে অ্যাপ সুইচ করুন", en:"Switch apps in the Overview"} },
+  { cat:3, onlyVariant:"gnome", chords:[["Ctrl","N"]], desc:{bn:"নতুন Nautilus উইন্ডো খুলুন", en:"Open a new Nautilus window"} },
+  { cat:3, onlyVariant:"gnome", chords:[["Ctrl","Shift","N"]], desc:{bn:"নতুন ফোল্ডার তৈরি করুন", en:"Create a new folder"} },
+  { cat:3, onlyVariant:"gnome", chords:[["F2"]], desc:{bn:"রিনেম করুন", en:"Rename"} },
+  { cat:3, onlyVariant:"gnome", chords:[["Ctrl","H"]], desc:{bn:"লুকানো ফাইল দেখান/লুকান", en:"Show/hide hidden files"} },
+  { cat:3, onlyVariant:"gnome", chords:[["Delete"]], desc:{bn:"Trash-এ সরান", en:"Move to Trash"} },
+  { cat:3, onlyVariant:"gnome", chords:[["Alt","Up"]], desc:{bn:"প্যারেন্ট ফোল্ডারে যান", en:"Go to the parent folder"} },
+  { cat:4, onlyVariant:"gnome", chords:[["Ctrl","Alt","F2"]], desc:{bn:"ভার্চুয়াল টার্মিনাল (TTY)-এ যান", en:"Switch to a virtual terminal (TTY)"} },
+  { cat:4, onlyVariant:"gnome", chords:[["Ctrl","Alt","F1"]], desc:{bn:"গ্রাফিকাল সেশনে ফিরে আসুন", en:"Return to the graphical session"} },
+
+  { cat:0, essential:true, onlyVariant:"kde", chords:[["Alt","F2"]], desc:{bn:"KRunner খুলুন (অ্যাপ লঞ্চার ও সার্চ)", en:"Open KRunner (app launcher and search)"} },
+  { cat:0, essential:true, onlyVariant:"kde", chords:[["Alt","Tab"]], desc:{bn:"উইন্ডো সুইচ করুন", en:"Switch windows"} },
+  { cat:0, essential:true, onlyVariant:"kde", chords:[["Meta"]], desc:{bn:"অ্যাপ লঞ্চার/Overview খুলুন", en:"Open the app launcher/Overview"} },
+  { cat:0, essential:true, onlyVariant:"kde", chords:[["Ctrl","Alt","T"]], desc:{bn:"টার্মিনাল খুলুন (কিছু ডিস্ট্রোতে ডিফল্ট)", en:"Open a terminal (default on some distros)"} },
+  { cat:0, essential:true, onlyVariant:"kde", chords:[["Ctrl","Alt","L"]], desc:{bn:"স্ক্রিন লক করুন", en:"Lock the screen"} },
+  { cat:0, onlyVariant:"kde", chords:[["PrtScn"]], desc:{bn:"পুরো স্ক্রিনশট নিন (Spectacle)", en:"Take a full screenshot (Spectacle)"} },
+  { cat:0, onlyVariant:"kde", chords:[["Shift","PrtScn"]], desc:{bn:"নির্বাচিত অংশের স্ক্রিনশট নিন", en:"Take a screenshot of a selected area"} },
+  { cat:0, onlyVariant:"kde", chords:[["Meta","Shift","PrtScn"]], desc:{bn:"বর্তমান উইন্ডোর স্ক্রিনশট নিন", en:"Take a screenshot of the current window"} },
+  { cat:1, onlyVariant:"kde", chords:[["Meta","Left"]], desc:{bn:"উইন্ডো বামে কুইক-টাইল করুন", en:"Quick-tile the window to the left"} },
+  { cat:1, onlyVariant:"kde", chords:[["Meta","Right"]], desc:{bn:"উইন্ডো ডানে কুইক-টাইল করুন", en:"Quick-tile the window to the right"} },
+  { cat:1, onlyVariant:"kde", chords:[["Meta","Up"]], desc:{bn:"উইন্ডো ম্যাক্সিমাইজ করুন", en:"Maximize the window"} },
+  { cat:1, onlyVariant:"kde", chords:[["Alt","F4"]], desc:{bn:"উইন্ডো বন্ধ করুন", en:"Close the window"} },
+  { cat:1, onlyVariant:"kde", chords:[["Alt","F3"]], desc:{bn:"উইন্ডো অপারেশন মেনু খুলুন", en:"Open the window operations menu"} },
+  { cat:1, onlyVariant:"kde", chords:[["Ctrl","F9"]], desc:{bn:"সব উইন্ডো মিনিমাইজ করে ডেস্কটপ দেখান", en:"Minimize all windows to show the desktop"} },
+  { cat:2, onlyVariant:"kde", chords:[["Ctrl","F1"]], desc:{bn:"১ নম্বর ভার্চুয়াল ডেস্কটপে যান", en:"Go to virtual desktop 1"} },
+  { cat:2, onlyVariant:"kde", chords:[["Ctrl","Meta","Left"]], desc:{bn:"আগের ভার্চুয়াল ডেস্কটপে যান", en:"Go to the previous virtual desktop"} },
+  { cat:2, onlyVariant:"kde", chords:[["Ctrl","Meta","Right"]], desc:{bn:"পরের ভার্চুয়াল ডেস্কটপে যান", en:"Go to the next virtual desktop"} },
+  { cat:2, onlyVariant:"kde", chords:[["Meta","Tab"]], desc:{bn:"টাস্ক সুইচার খুলুন", en:"Open the task switcher"} },
+  { cat:3, onlyVariant:"kde", chords:[["F2"]], desc:{bn:"Dolphin-এ রিনেম করুন", en:"Rename in Dolphin"} },
+  { cat:3, onlyVariant:"kde", chords:[["Ctrl","L"]], desc:{bn:"লোকেশন বার থেকে পাথ লিখে যান", en:"Type a path in the location bar"} },
+  { cat:3, onlyVariant:"kde", chords:[["Ctrl","H"]], desc:{bn:"লুকানো ফাইল দেখান/লুকান", en:"Show/hide hidden files"} },
+  { cat:3, onlyVariant:"kde", chords:[["F5"]], desc:{bn:"রিফ্রেশ করুন", en:"Refresh"} },
+  { cat:3, onlyVariant:"kde", chords:[["Ctrl","Shift","N"]], desc:{bn:"নতুন ফোল্ডার তৈরি করুন", en:"Create a new folder"} },
+  { cat:4, onlyVariant:"kde", chords:[["Ctrl","Alt","Esc"]], desc:{bn:"অ্যাপ জোর করে বন্ধ করার কার্সর চালু করুন", en:"Start the force-close-app cursor"} },
+  { cat:4, onlyVariant:"kde", chords:[["Ctrl","Alt","F2"]], desc:{bn:"ভার্চুয়াল টার্মিনাল (TTY)-এ যান", en:"Switch to a virtual terminal (TTY)"} },
+
+  { cat:0, essential:true, onlyVariant:"cinnamon", chords:[["Super"]], desc:{bn:"মেনু খুলুন", en:"Open the menu"} },
+  { cat:0, essential:true, onlyVariant:"cinnamon", chords:[["Alt","Tab"]], desc:{bn:"অ্যাপ সুইচ করুন", en:"Switch between apps"} },
+  { cat:0, essential:true, onlyVariant:"cinnamon", chords:[["Ctrl","Alt","T"]], desc:{bn:"টার্মিনাল খুলুন", en:"Open a terminal"} },
+  { cat:0, essential:true, onlyVariant:"cinnamon", chords:[["Ctrl","Alt","L"]], desc:{bn:"স্ক্রিন লক করুন", en:"Lock the screen"} },
+  { cat:0, onlyVariant:"cinnamon", chords:[["PrtScn"]], desc:{bn:"পুরো স্ক্রিনশট নিন", en:"Take a full screenshot"} },
+  { cat:0, onlyVariant:"cinnamon", chords:[["Shift","PrtScn"]], desc:{bn:"নির্বাচিত অংশের স্ক্রিনশট নিন", en:"Take a screenshot of a selected area"} },
+  { cat:1, onlyVariant:"cinnamon", chords:[["Super","Up"]], desc:{bn:"উইন্ডো ম্যাক্সিমাইজ করুন", en:"Maximize the window"} },
+  { cat:1, onlyVariant:"cinnamon", chords:[["Super","Down"]], desc:{bn:"উইন্ডো রিস্টোর/মিনিমাইজ করুন", en:"Restore/minimize the window"} },
+  { cat:1, onlyVariant:"cinnamon", chords:[["Super","Left"]], desc:{bn:"উইন্ডো বামে টাইল করুন", en:"Tile the window to the left"} },
+  { cat:1, onlyVariant:"cinnamon", chords:[["Super","Right"]], desc:{bn:"উইন্ডো ডানে টাইল করুন", en:"Tile the window to the right"} },
+  { cat:1, onlyVariant:"cinnamon", chords:[["Alt","F4"]], desc:{bn:"উইন্ডো বন্ধ করুন", en:"Close the window"} },
+  { cat:2, onlyVariant:"cinnamon", chords:[["Ctrl","Alt","Left"]], desc:{bn:"বাম পাশের ওয়ার্কস্পেসে যান", en:"Go to the workspace on the left"} },
+  { cat:2, onlyVariant:"cinnamon", chords:[["Ctrl","Alt","Right"]], desc:{bn:"ডান পাশের ওয়ার্কস্পেসে যান", en:"Go to the workspace on the right"} },
+  { cat:2, onlyVariant:"cinnamon", chords:[["Ctrl","Alt","Up"]], desc:{bn:"সব ওয়ার্কস্পেসের Overview (Expo) দেখুন", en:"Show the Overview (Expo) of all workspaces"} },
+  { cat:3, onlyVariant:"cinnamon", chords:[["Ctrl","N"]], desc:{bn:"নতুন Nemo উইন্ডো খুলুন", en:"Open a new Nemo window"} },
+  { cat:3, onlyVariant:"cinnamon", chords:[["Ctrl","Shift","N"]], desc:{bn:"নতুন ফোল্ডার তৈরি করুন", en:"Create a new folder"} },
+  { cat:3, onlyVariant:"cinnamon", chords:[["F2"]], desc:{bn:"রিনেম করুন", en:"Rename"} },
+  { cat:3, onlyVariant:"cinnamon", chords:[["Ctrl","H"]], desc:{bn:"লুকানো ফাইল দেখান/লুকান", en:"Show/hide hidden files"} },
+  { cat:3, onlyVariant:"cinnamon", chords:[["Delete"]], desc:{bn:"Trash-এ সরান", en:"Move to Trash"} },
+  { cat:4, onlyVariant:"cinnamon", chords:[["Ctrl","Alt","F2"]], desc:{bn:"ভার্চুয়াল টার্মিনাল (TTY)-এ যান", en:"Switch to a virtual terminal (TTY)"} },
+
+  { cat:0, essential:true, onlyVariant:"xfce", chords:[["Ctrl","Alt","T"]], desc:{bn:"টার্মিনাল খুলুন", en:"Open a terminal"} },
+  { cat:0, essential:true, onlyVariant:"xfce", chords:[["Alt","Tab"]], desc:{bn:"অ্যাপ সুইচ করুন", en:"Switch between apps"} },
+  { cat:0, essential:true, onlyVariant:"xfce", chords:[["Alt","F2"]], desc:{bn:"অ্যাপ লঞ্চার (Run ডায়ালগ) খুলুন", en:"Open the app launcher (Run dialog)"} },
+  { cat:0, onlyVariant:"xfce", chords:[["PrtScn"]], desc:{bn:"স্ক্রিনশট নিন", en:"Take a screenshot"} },
+  { cat:0, onlyVariant:"xfce", chords:[["Alt","PrtScn"]], desc:{bn:"বর্তমান উইন্ডোর স্ক্রিনশট নিন", en:"Take a screenshot of the current window"} },
+  { cat:1, onlyVariant:"xfce", chords:[["Alt","F7"]], desc:{bn:"উইন্ডো মুভ মোড চালু করুন", en:"Start window move mode"} },
+  { cat:1, onlyVariant:"xfce", chords:[["Alt","F8"]], desc:{bn:"উইন্ডো রিসাইজ মোড চালু করুন", en:"Start window resize mode"} },
+  { cat:1, onlyVariant:"xfce", chords:[["Alt","F4"]], desc:{bn:"উইন্ডো বন্ধ করুন", en:"Close the window"} },
+  { cat:1, onlyVariant:"xfce", chords:[["Alt","F9"]], desc:{bn:"উইন্ডো মিনিমাইজ করুন", en:"Minimize the window"} },
+  { cat:1, onlyVariant:"xfce", chords:[["Alt","F10"]], desc:{bn:"উইন্ডো ম্যাক্সিমাইজ করুন", en:"Maximize the window"} },
+  { cat:2, onlyVariant:"xfce", chords:[["Ctrl","Alt","Left"]], desc:{bn:"বাম পাশের ওয়ার্কস্পেসে যান", en:"Go to the workspace on the left"} },
+  { cat:2, onlyVariant:"xfce", chords:[["Ctrl","Alt","Right"]], desc:{bn:"ডান পাশের ওয়ার্কস্পেসে যান", en:"Go to the workspace on the right"} },
+  { cat:2, onlyVariant:"xfce", chords:[["Ctrl","Alt","D"]], desc:{bn:"সব উইন্ডো মিনিমাইজ করে ডেস্কটপ দেখান", en:"Minimize all windows to show the desktop"} },
+  { cat:3, onlyVariant:"xfce", chords:[["F2"]], desc:{bn:"Thunar-এ রিনেম করুন", en:"Rename in Thunar"} },
+  { cat:3, onlyVariant:"xfce", chords:[["Ctrl","H"]], desc:{bn:"লুকানো ফাইল দেখান/লুকান", en:"Show/hide hidden files"} },
+  { cat:3, onlyVariant:"xfce", chords:[["Ctrl","Shift","N"]], desc:{bn:"নতুন ফোল্ডার তৈরি করুন", en:"Create a new folder"} },
+  { cat:3, onlyVariant:"xfce", chords:[["Delete"]], desc:{bn:"Trash-এ সরান", en:"Move to Trash"} },
+  { cat:3, onlyVariant:"xfce", chords:[["Alt","Up"]], desc:{bn:"প্যারেন্ট ফোল্ডারে যান", en:"Go to the parent folder"} },
+  { cat:4, onlyVariant:"xfce", chords:[["Ctrl","Alt","F2"]], desc:{bn:"ভার্চুয়াল টার্মিনাল (TTY)-এ যান", en:"Switch to a virtual terminal (TTY)"} },
+];
+
+/* ---------- OS profiles ---------- */
+const OS_PROFILES = {
+  windows: {
+    label:"Windows", icon:"windows",
+    categories: WIN_CATEGORIES, items: WIN_ITEMS,
+    sub: { key:"winver", default:"10", options:[
+      {id:"10", label:"Windows 10"}, {id:"11", label:"Windows 11"}
+    ]},
+    tip:{
+      bn:"কার্ডে ক্লিক করলে শর্টকাটটি ক্লিপবোর্ডে কপি হয়ে যাবে। বেগুনি ব্যাজ মানে শর্টকাটটি শুধু ওই সংস্করণেই কাজ করে। উপরের সুইচ দিয়ে Windows 10/11 বদলান।",
+      en:"Click a card to copy the shortcut to your clipboard. The purple badge means the shortcut only works on that version. Use the switch above to toggle Windows 10/11.",
+    },
+    titlebar:"windows-shortcuts-reference — Win10 & Win11",
+  },
+  mac: {
+    label:"macOS", icon:"apple",
+    categories: MAC_CATEGORIES, items: MAC_ITEMS,
+    sub: null,
+    tip:{
+      bn:"কার্ডে ক্লিক করলে শর্টকাটটি ক্লিপবোর্ডে কপি হয়ে যাবে। ★ চিহ্নিত শর্টকাটগুলো সবচেয়ে বেশি ব্যবহৃত। বেশিরভাগ ল্যাপটপে Fn চেপে F-কী গুলো ব্যবহার করতে হতে পারে।",
+      en:"Click a card to copy the shortcut to your clipboard. ★ marks the most frequently used shortcuts. On most laptops you may need to hold Fn to use the F-keys.",
+    },
+    titlebar:"macos-shortcuts-reference",
+  },
+  linux: {
+    label:"Linux", icon:"tux",
+    categories: LINUX_CATEGORIES, items: LINUX_ITEMS,
+    sub: { key:"distro", default:"gnome", options:[
+      {id:"gnome", label:"GNOME · Ubuntu/Fedora"},
+      {id:"kde", label:"KDE Plasma · Kubuntu"},
+      {id:"cinnamon", label:"Cinnamon · Mint"},
+      {id:"xfce", label:"XFCE · Xubuntu"},
+    ]},
+    tip:{
+      bn:"লিনাক্সে শর্টকাট মূলত ডেস্কটপ এনভায়রনমেন্টের (DE) ওপর নির্ভর করে, ডিস্ট্রোর ওপর নয় — উপরে DE বেছে নিন। কিছু ডিস্ট্রো ডিফল্ট শর্টকাট কাস্টমাইজ করে রাখতে পারে।",
+      en:"On Linux, shortcuts mostly depend on the Desktop Environment (DE), not the distro — pick a DE above. Some distros may customize the default keybindings.",
+    },
+    titlebar:"linux-shortcuts-reference — GNOME · KDE · Cinnamon · XFCE",
+  },
+};
+
+/* ============================= STATE ============================= */
+let currentOS = 'windows';
+let variantState = { windows:'10', linux:'gnome' };
+
+function getProfile(){ return OS_PROFILES[currentOS]; }
+function getVariant(){
+  const p = getProfile();
+  return p.sub ? variantState[currentOS] : null;
+}
+
+/* ============================= HELPERS ============================= */
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function highlight(text, q){
+  if(!q) return escapeHtml(text);
+  const idx = text.toLowerCase().indexOf(q.toLowerCase());
+  if(idx === -1) return escapeHtml(text);
+  return escapeHtml(text.slice(0,idx)) + '<mark>' + escapeHtml(text.slice(idx,idx+q.length)) + '</mark>' + escapeHtml(text.slice(idx+q.length));
+}
+function keysToPlain(chords){ return chords.map(c => c.join('+')).join(' '); }
+function renderKeys(chords){
+  return chords.map(chord => {
+    const keyEls = chord.map(k => `<kbd>${escapeHtml(k)}</kbd>`).join('<span class="plus">+</span>');
+    return `<span class="chord">${keyEls}</span>`;
+  }).join('');
+}
+function toBnDigits(n){
+  const map = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+  return String(n).split('').map(ch => map[ch] ?? ch).join('');
+}
+function fmtCount(n){ return LANG === 'bn' ? toBnDigits(n) : String(n); }
+function currentDesc(item){
+  const v = getVariant();
+  if(v && item.variantDesc && item.variantDesc[v]) return item.variantDesc[v][LANG] || item.variantDesc[v].bn;
+  return item.desc[LANG] || item.desc.bn;
+}
+function itemApplies(item){
+  if(!item.onlyVariant) return true;
+  return item.onlyVariant === getVariant();
+}
+
+/* A shortcut is "OS-level" (globally hooked before the browser ever sees the
+   keydown) if it uses the system meta key, is a WM-level switcher, or is a
+   well-known reserved combo. Websites can never intercept these — this is a
+   heuristic used only to warn the user honestly, not a detection mechanism. */
+function looksOSLevel(chord, forOS){
+  const set = chord.map(k => k.toLowerCase());
+  const has = k => set.includes(k);
+  const metaLikes = ['win','cmd','super','meta'];
+  if(set.some(k => metaLikes.includes(k))) return true;
+  if(has('prtscn')) return true;
+  if(has('alt') && has('tab')) return true;
+  if(has('ctrl') && has('alt')) return true;
+  if(has('alt') && set.some(k => /^f\d{1,2}$/.test(k))) return true;
+  if(forOS === 'mac' && has('ctrl') && set.some(k => ['up','down','left','right'].includes(k))) return true;
+  const known = [['ctrl','shift','esc'], ['ctrl','alt','delete'], ['ctrl','alt','esc']];
+  const target = [...set].sort().join('+');
+  if(known.some(k => [...k].sort().join('+') === target)) return true;
+  return false;
+}
+
+/* ============================= LANGUAGE ============================= */
+function applyLanguage(){
+  const t = UI[LANG];
+  document.documentElement.lang = LANG;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === LANG));
+  document.getElementById('txtEyebrow').textContent = t.eyebrow;
+  document.getElementById('txtHeroTitle').innerHTML = t.heroTitleHTML;
+  document.getElementById('txtHeroSub').textContent = t.heroSub;
+  document.getElementById('search').placeholder = t.searchPlaceholder;
+  document.getElementById('txtKbdCaption').textContent = t.kbdCaption;
+  document.getElementById('txtLegendLive').textContent = t.legendLive;
+  document.getElementById('txtLegendLock').textContent = t.legendLock;
+  document.getElementById('txtSidebarTitle').textContent = t.sidebarTitle;
+  document.getElementById('txtNoResults').textContent = t.noResultsText;
+  document.getElementById('txtStatShortcuts').textContent = t.statShortcuts;
+  document.getElementById('txtStatHint').textContent = t.statSearchHint;
+
+  buildNav();
+  buildCategories();
+  applyFilter();
+  updateStatus();
+}
+
+function setupLangSwitch(){
+  document.getElementById('langSwitch').querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(btn.dataset.lang === LANG) return;
+      LANG = btn.dataset.lang;
+      applyLanguage();
+    });
+  });
+}
+
+/* ============================= BUILD UI ============================= */
+function buildOsTabs(){
+  const wrap = document.getElementById('osTabs');
+  wrap.innerHTML = Object.keys(OS_PROFILES).map(key => {
+    const p = OS_PROFILES[key];
+    return `<div class="os-tab ${key===currentOS?'active':''}" data-os="${key}" role="button" tabindex="0">
+      <svg viewBox="0 0 24 24">${ICONS[p.icon]}</svg><span class="full">${p.label}</span>
+    </div>`;
+  }).join('');
+  wrap.querySelectorAll('.os-tab').forEach(el => {
+    const go = () => switchOS(el.dataset.os);
+    el.addEventListener('click', go);
+    el.addEventListener('keydown', e => { if(e.key==='Enter') go(); });
+  });
+}
+
+function buildSubTabs(){
+  const wrap = document.getElementById('subTabs');
+  const p = getProfile();
+  if(!p.sub){ wrap.classList.remove('show'); wrap.innerHTML=''; return; }
+  wrap.classList.add('show');
+  wrap.innerHTML = p.sub.options.map(o => `
+    <div class="sub-tab ${variantState[currentOS]===o.id?'active':''}" data-variant="${o.id}" role="button" tabindex="0">${o.label}</div>
+  `).join('');
+  wrap.querySelectorAll('.sub-tab').forEach(el => {
+    const go = () => {
+      variantState[currentOS] = el.dataset.variant;
+      buildSubTabs();
+      buildNav();
+      buildCategories();
+      applyFilter();
+      updateStatus();
+    };
+    el.addEventListener('click', go);
+    el.addEventListener('keydown', e => { if(e.key==='Enter') go(); });
+  });
+}
+
+function buildNav(){
+  const nav = document.getElementById('navItems');
+  const p = getProfile();
+  nav.innerHTML = p.categories.map((c,i) => `
+    <div class="nav-item" data-cat="${i}" role="button" tabindex="0">
+      <svg class="nav-icon" viewBox="0 0 24 24">${ICONS[c.icon]}</svg>
+      <span>${c.title[LANG] || c.title.bn}</span>
+      <span class="count" id="navcount-${i}"></span>
+    </div>
+  `).join('');
+  nav.querySelectorAll('.nav-item').forEach(el => {
+    const go = () => {
+      const target = document.getElementById('cat-' + el.dataset.cat);
+      if(target) target.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'});
+      closeSidebar();
+    };
+    el.addEventListener('click', go);
+    el.addEventListener('keydown', e => { if(e.key === 'Enter') go(); });
+  });
+}
+
+function buildCategories(){
+  const wrap = document.getElementById('categories');
+  const p = getProfile();
+  const t = UI[LANG];
+  wrap.innerHTML = p.categories.map((c,i) => `
+    <section class="category" id="cat-${i}" data-cat="${i}">
+      <div class="cat-header">
+        <span class="cat-num">${String(i+1).padStart(2,'0')}</span>
+        <span class="cat-title">${c.title[LANG] || c.title.bn}</span>
+      </div>
+      <div class="cat-sub">${c.sub[LANG] || c.sub.bn}</div>
+      <div class="grid" id="grid-${i}"></div>
+    </section>
+  `).join('');
+
+  p.items.forEach((item, idx) => { item._idx = idx; });
+
+  p.categories.forEach((c,i) => {
+    const grid = document.getElementById('grid-' + i);
+    const items = p.items.filter(d => d.cat === i);
+    grid.innerHTML = items.map(d => {
+      let badge = '';
+      if(d.essential) badge = '<span class="badge-star">★</span>';
+      else if(d.onlyVariant && p.sub){
+        const opt = p.sub.options.find(o => o.id === d.onlyVariant);
+        badge = `<span class="badge-variant">${opt ? opt.label.split('·')[0].trim() : d.onlyVariant}</span>`;
+      }
+      const osLevel = d.chords.length === 1 && looksOSLevel(d.chords[0], currentOS);
+      const lockIcon = osLevel ? `<span class="os-lock" title="${escapeHtml(t.osLockTitle)}">🔒</span>` : '';
+      return `
+      <div class="card" data-idx="${d._idx}" tabindex="0" role="button" title="${escapeHtml(t.copyTitle)}">
+        ${badge}
+        <div class="keys">${renderKeys(d.chords)}</div>
+        <div class="desc"></div>
+        ${lockIcon}
+        <div class="copy-hint">${escapeHtml(t.copiedText)}</div>
+      </div>`;
+    }).join('');
+  });
+
+  wrap.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      const p2 = getProfile();
+      const item = p2.items[card.dataset.idx];
+      const text = keysToPlain(item.chords);
+      navigator.clipboard?.writeText(text).catch(()=>{});
+      card.classList.add('copied');
+      setTimeout(() => card.classList.remove('copied'), 900);
+    });
+    card.addEventListener('keydown', e => { if(e.key === 'Enter') card.click(); });
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+}
+
+function applyFilter(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const p = getProfile();
+  let shown = 0, total = 0;
+
+  p.categories.forEach((c,i) => {
+    const grid = document.getElementById('grid-' + i);
+    if(!grid) return;
+    let catShown = 0;
+    grid.querySelectorAll('.card').forEach(card => {
+      const item = p.items[card.dataset.idx];
+      const applies = itemApplies(item);
+      if(!applies){ card.classList.add('hidden'); return; }
+      total++;
+      const desc = currentDesc(item);
+      const keyStr = keysToPlain(item.chords).toLowerCase();
+      const descStr = desc.toLowerCase();
+      const match = !q || keyStr.includes(q) || descStr.includes(q);
+      card.classList.toggle('hidden', !match);
+      card.querySelector('.desc').innerHTML = highlight(desc, q && descStr.includes(q) ? q : '');
+      if(match){ catShown++; shown++; }
+    });
+    const sec = document.getElementById('cat-' + i);
+    if(sec) sec.classList.toggle('hidden', catShown === 0);
+    const navcount = document.getElementById('navcount-' + i);
+    if(navcount) navcount.textContent = fmtCount(catShown);
+    const navItem = document.querySelector(`.nav-item[data-cat="${i}"]`);
+    if(navItem) navItem.style.opacity = catShown === 0 ? '0.35' : '1';
+  });
+
+  document.getElementById('noResults').classList.toggle('show', shown === 0);
+  document.getElementById('statCount').textContent = `${fmtCount(shown)} / ${fmtCount(total)}`;
+}
+
+function updateStatus(){
+  const p = getProfile();
+  const v = getVariant();
+  let label = p.label;
+  if(v && p.sub){
+    const opt = p.sub.options.find(o => o.id === v);
+    if(opt) label += ' · ' + opt.label;
+  }
+  document.getElementById('statOS').textContent = label;
+  document.querySelector('.titlebar-label').textContent = p.titlebar;
+  const t = UI[LANG];
+  document.getElementById('tipBox').innerHTML = `<b>${escapeHtml(t.tipLabel)}:</b> ${escapeHtml(p.tip[LANG] || p.tip.bn)}`;
+}
+
+function setupScrollSpy(){
+  if(typeof IntersectionObserver === 'undefined') return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        const active = document.querySelector(`.nav-item[data-cat="${entry.target.dataset.cat}"]`);
+        if(active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('section.category').forEach(s => obs.observe(s));
+}
+
+function switchOS(osKey){
+  if(osKey === currentOS) return;
+  currentOS = osKey;
+  buildOsTabs();
+  buildSubTabs();
+  buildNav();
+  buildCategories();
+  applyFilter();
+  updateStatus();
+  setupScrollSpy();
+  const firstNav = document.querySelector('.nav-item[data-cat="0"]');
+  if(firstNav) firstNav.classList.add('active');
+}
+
+function setupSearch(){
+  const input = document.getElementById('search');
+  input.addEventListener('input', applyFilter);
+  document.addEventListener('keydown', (e) => {
+    if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
+      e.preventDefault();
+      input.focus();
+      input.select();
+    }
+    if(e.key === 'Escape'){
+      if(document.activeElement === input){
+        input.value = '';
+        applyFilter();
+        input.blur();
+      }
+      closeSidebar();
+    }
+  });
+}
+
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('backdrop').classList.add('show');
+  document.getElementById('menuBtn').setAttribute('aria-expanded','true');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('show');
+  document.getElementById('menuBtn').setAttribute('aria-expanded','false');
+}
+function setupMobileNav(){
+  const btn = document.getElementById('menuBtn');
+  const backdrop = document.getElementById('backdrop');
+  btn.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+  backdrop.addEventListener('click', closeSidebar);
+}
+
+/* ============================= LIVE KEYBOARD-COMBO DETECTION ============================= */
+const MOD_KEYS = new Set(['Control','Shift','Alt','Meta','OS','AltGraph']);
+
+function normalizeMainKey(e){
+  const k = e.key;
+  if(MOD_KEYS.has(k)) return null;
+  if(k === ' ') return 'Space';
+  if(k === 'ArrowLeft') return 'Left';
+  if(k === 'ArrowRight') return 'Right';
+  if(k === 'ArrowUp') return 'Up';
+  if(k === 'ArrowDown') return 'Down';
+  if(k === 'Escape') return 'Esc';
+  if(k === 'PrintScreen') return 'PrtScn';
+  if(k === '+') return 'Plus';
+  if(k === '-' || k === '_') return 'Minus';
+  if(k === 'PageUp') return 'Page Up';
+  if(k === 'PageDown') return 'Page Down';
+  if(k.length === 1) return k.toUpperCase();
+  return k;
+}
+
+function metaLabel(){
+  if(currentOS === 'mac') return 'Cmd';
+  if(currentOS === 'windows') return 'Win';
+  const v = getVariant();
+  return v === 'kde' ? 'Meta' : 'Super';
+}
+
+function comboFromEvent(e){
+  const mods = [];
+  if(e.ctrlKey) mods.push('Ctrl');
+  if(e.shiftKey) mods.push('Shift');
+  if(e.altKey) mods.push(currentOS === 'mac' ? 'Option' : 'Alt');
+  if(e.metaKey) mods.push(metaLabel());
+  const main = normalizeMainKey(e);
+  return main ? [...mods, main] : mods;
+}
+
+function comboKey(arr){ return [...arr].map(s=>s.toLowerCase()).sort().join('+'); }
+
+function findMatchingItem(combo){
+  if(combo.length === 0) return null;
+  const p = getProfile();
+  const target = comboKey(combo);
+  return p.items.find(item => itemApplies(item) && item.chords.length === 1 && comboKey(item.chords[0]) === target);
+}
+
+let pillTimer = null;
+function flashDetected(text, matched){
+  const t = UI[LANG];
+  const el = document.getElementById('detectedPill');
+  el.textContent = (matched ? t.matchedPrefix : t.noMatchPrefix) + text;
+  el.classList.remove('show','ok','no');
+  void el.offsetWidth;
+  el.classList.add('show', matched ? 'ok' : 'no');
+  clearTimeout(pillTimer);
+  pillTimer = setTimeout(() => el.classList.remove('show'), 1600);
+}
+
+function highlightCard(item){
+  const card = document.querySelector(`.card[data-idx="${item._idx}"]`);
+  if(!card) return;
+  const reduced = (typeof window.matchMedia === 'function') && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  card.scrollIntoView({behavior: reduced ? 'auto' : 'smooth', block:'center'});
+  card.classList.remove('kbd-match');
+  void card.offsetWidth;
+  card.classList.add('kbd-match');
+  setTimeout(() => card.classList.remove('kbd-match'), 1500);
+}
+
+function setupKeyCapture(){
+  document.addEventListener('keydown', (e) => {
+    const activeTag = document.activeElement && document.activeElement.tagName;
+    if(activeTag === 'INPUT' || activeTag === 'TEXTAREA') return;
+    if(e.repeat) return;
+
+    const combo = comboFromEvent(e);
+    if(combo.length === 0) return;
+
+    const item = findMatchingItem(combo);
+    const label = combo.join('+');
+
+    if(item){
+      const mainKey = combo[combo.length - 1];
+      const isSafeEditOp = !e.metaKey && ['C','V','X','Z','A'].includes(mainKey) && combo.length === (e.ctrlKey ? 2 : 1);
+      if(!isSafeEditOp) e.preventDefault();
+      flashDetected(label, true);
+      const searchInput = document.getElementById('search');
+      if(searchInput.value){ searchInput.value = ''; applyFilter(); }
+      try{ highlightCard(item); }catch(err){ /* scroll/animation is best-effort, never block the match feedback */ }
+    } else {
+      flashDetected(label, false);
+    }
+  });
+}
+
+/* ============================= INIT ============================= */
+buildOsTabs();
+buildSubTabs();
+buildNav();
+buildCategories();
+setupSearch();
+setupMobileNav();
+setupKeyCapture();
+setupLangSwitch();
+applyLanguage();
+setupScrollSpy();
+const firstNav = document.querySelector('.nav-item[data-cat="0"]');
+if(firstNav) firstNav.classList.add('active');
+</script>
+
+</body>
+</html>
